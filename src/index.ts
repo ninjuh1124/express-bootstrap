@@ -50,7 +50,7 @@ export const loadRoutes = (server: expressCore.Express, routes: Route[]) => {
 	});
 };
 
-interface Options {
+export interface Options {
 	/** Comma separated list of origins from which requests can come from */
 	allowedOrigins?: string;
 	/** Comma separated list of methods allowed to handle */
@@ -59,7 +59,7 @@ interface Options {
 	allowedHeaders?: string;
 }
 
-interface Route {
+export interface Route {
 	/** Route path. Accepts anything `express.use` will take as path name. */
 	path: string;
 	/** Route controller. Will handle requests, generate responses, and send them back to client. */
@@ -68,7 +68,7 @@ interface Route {
 	router: (controller: Controller) => expressCore.RequestHandler;
 }
 
-interface Controller {
+export interface Controller {
 	[key: string]: (
 		request: expressCore.Request,
 		response: expressCore.Response
