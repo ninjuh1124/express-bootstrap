@@ -2,7 +2,8 @@
 	"name": "express-bootstrap",
 	"version": "1.0.0",
 	"description": "",
-	"main": "src/index.js",
+	"main": "dist/index.js",
+	"types": "types/index.d.ts",
 	"type": "module",
 	"scripts": {
 		"build-watch": "tsc --watch --preserveWatchOutput",
