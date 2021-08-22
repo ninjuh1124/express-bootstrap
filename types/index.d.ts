@@ -13,7 +13,7 @@ interface Route {
     router: (controller: Controller) => expressCore.RequestHandler;
 }
 interface Controller {
-    [key: string]: any;
+    [key: string]: (request: expressCore.Request, response: expressCore.Response) => any;
 }
 export {};
 //# sourceMappingURL=index.d.ts.map
