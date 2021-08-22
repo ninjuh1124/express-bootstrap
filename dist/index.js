@@ -14,15 +14,7 @@ export const initializeServer = (options = {
         response.header('Access-Control-Allow-headers', allowedHeaders);
         response.sendStatus(200);
     });
-    server.loadMiddleware = (middleware) => {
-        middleware.forEach((m) => server.use(m));
-    };
-    server.loadRoutes = (routes) => {
-        routes.forEach((route) => {
-            server.use(route.path, route.router(route.controller));
-        });
-    };
-    server.loadMiddleware([
+    loadMiddleware(server, [
         helmet(),
         (request, response, next) => {
             response.setHeader('X-Clacks-Overhead', 'GNU TERRY PRATCHET');
@@ -32,5 +24,13 @@ export const initializeServer = (options = {
         bodyParser.json(),
     ]);
     return server;
+};
+export const loadMiddleware = (server, middleware) => {
+    middleware.forEach((m) => server.use(m));
+};
+export const loadRoutes = (server, routes) => {
+    routes.forEach((route) => {
+        server.use(route.path, route.router(route.controller));
+    });
 };
 //# sourceMappingURL=index.js.map

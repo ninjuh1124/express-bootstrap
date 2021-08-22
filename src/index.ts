@@ -10,7 +10,7 @@ export const initializeServer = (
 		allowedHeaders: '*',
 	}
 ) => {
-	const server: expressCore.Express & BootstrapServer = express();
+	const server = express();
 
 	server.options('/*', (request, response) => {
 		const { allowedOrigins, allowedMethods, allowedHeaders } = options;
@@ -20,17 +20,7 @@ export const initializeServer = (
 		response.sendStatus(200);
 	});
 
-	server.loadMiddleware = (middleware) => {
-		middleware.forEach((m) => server.use(m));
-	};
-
-	server.loadRoutes = (routes) => {
-		routes.forEach((route) => {
-			server.use(route.path, route.router(route.controller));
-		});
-	};
-
-	server.loadMiddleware([
+	loadMiddleware(server, [
 		helmet(),
 		(
 			request: expressCore.Request,
@@ -47,15 +37,23 @@ export const initializeServer = (
 	return server;
 };
 
+export const loadMiddleware = (
+	server: expressCore.Express,
+	middleware: any[]
+) => {
+	middleware.forEach((m) => server.use(m));
+};
+
+export const loadRoutes = (server: expressCore.Express, routes: Route[]) => {
+	routes.forEach((route) => {
+		server.use(route.path, route.router(route.controller));
+	});
+};
+
 interface Options {
 	allowedOrigins?: string;
 	allowedMethods?: string;
 	allowedHeaders?: string;
-}
-
-interface BootstrapServer {
-	loadMiddleware?: (middleware: any[]) => void | expressCore.Express;
-	loadRoutes?: (routes: Route[]) => void | expressCore.Express;
 }
 
 interface Route {
